@@ -122,7 +122,7 @@ function fault_packet_int(fault_total)
         end
                      
         if i % 9 == 0 then
-            packet[ "fault"..m.."time" ] = temp_time["fault"..m.."year"]..'/'..temp_time["fault"..m.."month"]..'/'..temp_time["fault"..m.."day"]..'-'..temp_time["fault"..m.."hour"]..':'..temp_time["fault"..m.."min"]..':'..temp_time["fault"..m.."sec"]
+            packet[ "fault"..m.."time" ] = temp_time["fault"..m.."year"].."/"..temp_time["fault"..m.."month"].."/"..temp_time["fault"..m.."day"].."-"..temp_time["fault"..m.."hour"]..':'..temp_time["fault"..m.."min"]..':'..temp_time["fault"..m.."sec"]
         end
         
     end
