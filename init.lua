@@ -173,14 +173,12 @@ function _M.decode(payload)
         packet[ cmds[3] ] = 'func-fault'
         local fault_total = bit.lshift( getnumber(12),8) + getnumber(13)
         packet[ "fault_total" ] = fault_total       
-        return ("func == 0x02")
-        --fault_packet_int(fault_total);
+        fault_packet_int(fault_total);
     elseif (func == 0x01) then
         packet[ cmds[3] ] = 'func-status'
         status_packet_init();
     else
         packet[ cmds[3] ] = 'func-error'
-        return ("func error")
     end
     
     return Json(packet)
