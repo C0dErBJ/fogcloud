@@ -141,7 +141,7 @@ function _M.decode(payload)
     local head2 = getnumber(2)
     
     if ( (head1 ~= 0x3B) or (head2 ~= 0x31) ) then 
-        packet["wangchao"] = '22222222'
+        packet["head_error"] = 'ERROR'
 --        return Json(packet) 
     end
     
@@ -165,34 +165,24 @@ function _M.decode(payload)
         packet[ cmds[2] ] = 'Mode-232'
     else
         packet[ cmds[2] ] = 'Mode-ERROR'
-        return Json(packet) 
+--        return Json(packet) 
     end
     
     local func = getnumber(10)
-    
-    if (func == 1) then
-        packet[ cmds[3] ] = 'func-status'
-     
-        status_packet_init();
-        
-    elseif (func == 2) then 
+
+    if (func == 0x02) then
         packet[ cmds[3] ] = 'func-fault'
-                    
         local fault_total = bit.lshift( getnumber(12),8) + getnumber(13)
         packet[ "fault_total" ] = fault_total
-        
         --fault_packet_int(fault_total);
-      
-    else 
+    elseif (func == 0x01) then
+        packet[ cmds[3] ] = 'func-status'
+        status_packet_init();
+    else
         packet[ cmds[3] ] = 'func-error'
     end
-    
-    
-    packet["wangchao"] = '111111111'
     
     return Json(packet)
 end
 
 return _M
-
---print(_M.decode(string.fromhex('aa0010050102030405060708090a051e051e0101010101010101010101010101')))
